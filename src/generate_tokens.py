@@ -1,6 +1,8 @@
 from typing import List, Dict
 
+from src.token.function_call import FunctionCall
 from src.token.identifier import Identifier
+from src.token.literal import Literal
 from src.token.token import Token, LiteralType
 
 
@@ -11,7 +13,8 @@ def str_to_cast(value, type_str):
 
 
 str_to_type: Dict[str, LiteralType] = {
-    "int": LiteralType.INT
+    "int": LiteralType.INT,
+    "string": LiteralType.STR
 }
 
 
@@ -49,5 +52,23 @@ def generate_tokens(ast, variables: Dict[str, Identifier]):
                 variables[name] = identifier
             else:
                 raise Exception(f"Unexpected RHS of variable: {node['coords']}")
+        elif node_type == "FuncCall":
+            name = node["name"]["name"]
+            args = node["args"]["exprs"]
+            params = []
+            for arg in args:
+                node_type = arg["_nodetype"]
+                if node_type == "Constant":
+                    literal = Literal(arg["value"], str_to_type[arg["type"]])
+                    params.append(literal)
+                elif node_type == "ID":
+                    identifier = variables[arg["name"]]
+                    literal = Literal(identifier.value, identifier.literal_type)
+                    params.append(literal)
+                else:
+                    raise Exception(f"Unexpected node_type for parameter: {node['coords']}")
+
+            function = FunctionCall(name, params)
+            tokens.append(function)
 
     return tokens

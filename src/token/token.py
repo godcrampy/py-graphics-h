@@ -17,3 +17,6 @@ class LiteralType(Enum):
 class Token:
     def __init__(self, token_type: TokenType):
         self.token_type = token_type
+
+    def __str__(self):
+        return self.token_type
