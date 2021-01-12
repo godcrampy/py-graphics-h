@@ -4,6 +4,6 @@ int main() {
   int test;
   //  int test = gmode;
   //  initgraph(&gdriver, &gmode, "");
-  printf("Hello World", test);
+  printf("Hello World", &test);
 //  return 0;
 }

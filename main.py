@@ -32,5 +32,5 @@ variables: Dict[str, Identifier] = {
 
 tokens = generate_tokens(ast, variables)
 
-print([x.__str__() for x in tokens])
+print([token.__str__() for token in tokens])
 print(variables)

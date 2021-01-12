@@ -9,6 +9,8 @@ from src.token.token import Token, LiteralType
 def str_to_cast(value, type_str):
     if type_str == "int":
         return int(value) if value else int()
+    if type_str == "string":
+        return str(value) if value else int()
     return value
 
 
@@ -35,7 +37,7 @@ def generate_tokens(ast, variables: Dict[str, Identifier]):
             identifier_type = node["type"]["type"]["names"][0]
             if init is None:
                 # no RHS value
-                identifier = Identifier(name, str_to_cast(None, identifier_type), identifier_type)
+                identifier = Identifier(name, str_to_cast(None, identifier_type), str_to_type[identifier_type])
                 tokens.append(identifier)
                 variables[name] = identifier
                 continue
@@ -51,7 +53,7 @@ def generate_tokens(ast, variables: Dict[str, Identifier]):
                 tokens.append(identifier)
                 variables[name] = identifier
             else:
-                raise Exception(f"Unexpected RHS of variable: {node['coords']}")
+                raise Exception(f"Unexpected RHS of variable: {node['coord']}")
         elif node_type == "FuncCall":
             name = node["name"]["name"]
             args = node["args"]["exprs"]
@@ -65,8 +67,12 @@ def generate_tokens(ast, variables: Dict[str, Identifier]):
                     identifier = variables[arg["name"]]
                     literal = Literal(identifier.value, identifier.literal_type)
                     params.append(literal)
+                elif node_type == "UnaryOp":
+                    identifier = variables[arg["expr"]["name"]]
+                    literal = Literal(identifier.value, identifier.literal_type)
+                    params.append(literal)
                 else:
-                    raise Exception(f"Unexpected node_type for parameter: {node['coords']}")
+                    raise Exception(f"Unexpected node_type for parameter: {node['coord']}")
 
             function = FunctionCall(name, params)
             tokens.append(function)

@@ -4,12 +4,13 @@ from enum import Enum
 class TokenType(Enum):
     FUNC_DEF = 0  # function definition
     FUNC_CALL = 1  # function call
-    DECLARATION = 2  # variable declaraion
+    DECLARATION = 2  # variable declaration
     IDENTIFIER = 3  # identifier
     LITERAL = 4  # literal
 
 
 class LiteralType(Enum):
+    AMP = 0  # Ampersand (Location)
     INT = 1  # integer
     STR = 2  # string
 

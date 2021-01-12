@@ -9,3 +9,6 @@ class FunctionCall(Token):
         super().__init__(TokenType.FUNC_CALL)
         self.params = params
         self.name = name
+
+    def __str__(self):
+        return f"FunctionCall(f{self.name}, {[i.__str__() for i in self.params]})"
