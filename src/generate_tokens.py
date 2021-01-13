@@ -46,7 +46,7 @@ def handle_function_call(node, tokens, variables):
     for arg in args:
         node_type = arg["_nodetype"]
         if node_type == "Constant":
-            literal = Literal(arg["value"], str_to_type[arg["type"]])
+            literal = Literal(str_to_cast(arg["value"], arg["type"]), str_to_type[arg["type"]])
             params.append(literal)
         elif node_type == "ID":
             identifier = variables[arg["name"]]
