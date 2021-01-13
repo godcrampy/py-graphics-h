@@ -1,4 +1,6 @@
 int main() {
+  char a[] = "Hello";
+  char* b = "World";
   int gdriver = VGA;
   int gmode = 0;
   int test;

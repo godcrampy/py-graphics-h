@@ -18,7 +18,7 @@ def _child_attrs_of(klass):
     return all_attrs - non_child_attrs
 
 
-def _to_dict(node):
+def to_dict(node):
     """ Recursively convert an ast into dict representation. """
     klass = node.__class__
 
@@ -48,9 +48,9 @@ def _to_dict(node):
                 raise RuntimeError('Internal ast error. Array {} out of order. '
                                    'Expected index {}, got {}'.format(
                     array_name, len(result[array_name]), array_index))
-            result[array_name].append(_to_dict(child))
+            result[array_name].append(to_dict(child))
         else:
-            result[child_name] = _to_dict(child)
+            result[child_name] = to_dict(child)
 
     # Any child attributes that were missing need "None" values in the json.
     for child_attr in _child_attrs_of(klass):
@@ -66,4 +66,4 @@ def get_ast(filename):
         text = f.read()
         text = pre_process(text)
         ast = parser.parse(text, filename)
-    return _to_dict(ast)
+    return to_dict(ast)
