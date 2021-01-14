@@ -10,6 +10,7 @@ python-dotenv = "*"
 pycparser = "*"
 pytest = "*"
 pytest-cov = "*"
+easygraphics = "*"
 
 [scripts]
 test = "pytest"
