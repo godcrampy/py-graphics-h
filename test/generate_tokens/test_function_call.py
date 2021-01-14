@@ -65,3 +65,22 @@ def test_args():
 
     assert params[3].value == "world"
     assert params[3].literal_type == LiteralType.STR
+
+
+def test_ampersand():
+    test_str = "int main() {baz(&a, &b);}"
+    add_function_call_token(test_str)
+    token = tokens[-1]
+    assert isinstance(token, FunctionCall)
+    assert token.name == "baz"
+    assert isinstance(token.params, List)
+    assert len(token.params) == 2
+    params: List[Literal] = token.params
+    assert isinstance(params[0], Literal)
+    assert isinstance(params[1], Literal)
+
+    assert params[0].value == 5
+    assert params[0].literal_type == LiteralType.INT
+
+    assert params[1].value == "hello"
+    assert params[1].literal_type == LiteralType.STR
