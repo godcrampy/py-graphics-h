@@ -11,4 +11,4 @@ class FunctionCall(Token):
         self.name = name
 
     def __str__(self):
-        return f"FunctionCall(f{self.name}, {[i.__str__() for i in self.params]})"
+        return f"FunctionCall({self.name}, {[i.__str__() for i in self.params]})"

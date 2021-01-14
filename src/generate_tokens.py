@@ -30,7 +30,6 @@ def generate_tokens(ast, variables: Dict[str, Identifier]):
 
     for node in nodes:
         node_type = node["_nodetype"]
-        print(node_type)
         if node_type == "Decl":
             handle_declaration(node, tokens, variables)
         elif node_type == "FuncCall":
@@ -41,7 +40,7 @@ def generate_tokens(ast, variables: Dict[str, Identifier]):
 
 def handle_function_call(node, tokens, variables):
     name = node["name"]["name"]
-    args = node["args"]["exprs"]
+    args = node["args"]["exprs"] if node["args"] is not None else []
     params = []
     for arg in args:
         node_type = arg["_nodetype"]
@@ -112,6 +111,5 @@ def get_identifier_type(node):
     if node is None or "_nodetype" not in node:
         raise RuntimeError("Cannot find identifier_type of node")
     if node["_nodetype"] == "IdentifierType":
-        print(node)
         return node["names"][0]
     return get_identifier_type(node["type"])
