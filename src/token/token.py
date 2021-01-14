@@ -4,7 +4,7 @@ from enum import Enum
 class TokenType(Enum):
     FUNC_DEF = 0  # function definition
     FUNC_CALL = 1  # function call
-    DECLARATION = 2  # variable declaration
+    DECLARATION = 2  # variable declaration [NOT USED, identifier used instead]
     IDENTIFIER = 3  # identifier
     LITERAL = 4  # literal
 
