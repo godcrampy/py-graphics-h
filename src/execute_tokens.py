@@ -56,9 +56,11 @@ def execute_tokens(tokens: List[Token]):
                 text = params[2].value
                 temp_color = get_color()
                 set_color(text_color)
-                # print(get_font_size())
                 draw_text(x, y + 10, text)
                 set_color(temp_color)
+            elif token.name == "setfontcolor":
+                color = int_to_color[params[0].value]
+                text_color = color
             elif token.name == "line":
                 x1 = params[0].value
                 y1 = params[1].value
@@ -80,6 +82,15 @@ def execute_tokens(tokens: List[Token]):
                 r1 = params[4].value
                 r2 = params[5].value
                 arc(x, y, s, e, r1, r2)
+            elif token.name == "fillellipse":
+                x = params[0].value
+                y = params[1].value
+                r1 = params[2].value
+                r2 = params[3].value
+                temp_color = get_fill_color()
+                set_fill_color(get_color())
+                draw_ellipse(x, y, r1, r2)
+                set_fill_color(temp_color)
             elif token.name == "circle":
                 x = params[0].value
                 y = params[1].value
@@ -91,6 +102,15 @@ def execute_tokens(tokens: List[Token]):
                 x2 = params[2].value
                 y2 = params[3].value
                 draw_rect(x1, y1, x2, y2)
+            elif token.name == "drawpoly":
+                v = params[1].value
+                draw_polygon(*v)
+            elif token.name == "fillpoly":
+                v = params[1].value
+                temp_color = get_fill_color()
+                set_fill_color(get_color())
+                draw_polygon(*v)
+                set_fill_color(temp_color)
             elif token.name == "bar":
                 x1 = params[0].value
                 y1 = params[1].value
@@ -99,7 +119,7 @@ def execute_tokens(tokens: List[Token]):
                 set_fill_color(get_color())
                 fill_rect(x1, y1, x2, y2)
                 set_fill_color(Color.BLACK)
-            elif token.name == "setcolor" or token.name == "setfontcolor":
+            elif token.name == "setcolor":
                 color = int_to_color[params[0].value]
                 set_color(color)
             elif token.name == "getchar":
