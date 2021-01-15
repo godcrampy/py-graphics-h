@@ -15,7 +15,9 @@ variables: Dict[str, Identifier] = {}
 def add_token(test_str):
     ast = parser.parse(test_str)
     node = to_dict(ast)["ext"][0]
-    handle_declaration(node, tokens, variables)
+    identifier = handle_declaration(node, variables)
+    tokens.append(identifier)
+    variables[identifier.name] = identifier
 
 
 def test_direct_integer_declaration():
@@ -58,3 +60,17 @@ def test_uninitialised_integer_declaration():
     assert token.name == "c"
     assert "c" in variables
     assert variables["c"] == token
+
+
+def test_list_declaration():
+    test_str = "int d[5] = {1, 2, 3, 4, 5, c};"
+    add_token(test_str)
+
+    token = tokens[-1]
+    assert token.token_type == TokenType.IDENTIFIER
+    assert isinstance(token, Identifier)
+    assert token.value == [1, 2, 3, 4, 5, 0]
+    assert token.literal_type == LiteralType.LIST
+    assert token.name == "d"
+    assert "d" in variables
+    assert variables["d"] == token

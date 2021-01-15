@@ -15,7 +15,9 @@ variables: Dict[str, Identifier] = {}
 def add_token(test_str):
     ast = parser.parse(test_str)
     node = to_dict(ast)["ext"][0]
-    handle_declaration(node, tokens, variables)
+    identifier = handle_declaration(node, variables)
+    tokens.append(identifier)
+    variables[identifier.name] = identifier
 
 
 def test_direct_string_array_declaration():
