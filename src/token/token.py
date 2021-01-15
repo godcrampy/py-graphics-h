@@ -13,6 +13,7 @@ class LiteralType(Enum):
     AMP = 0  # Ampersand (Location)
     INT = 1  # integer
     STR = 2  # string
+    LIST = 3  # list
 
 
 class Token:

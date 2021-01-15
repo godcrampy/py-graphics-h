@@ -36,9 +36,11 @@ int_to_color: Dict[int, Color] = {
 
 
 def execute_tokens(tokens: List[Token]):
+    text_color = Color.WHITE
     for token in tokens:
         if isinstance(token, FunctionCall):
             params = token.params
+            # print(token.name, [p.__str__() for p in params])
             if token.name == "initgraph":
                 graph_mode = token.params[1].value
                 init_graph(*(int_to_vga_modes[graph_mode]))
@@ -46,12 +48,17 @@ def execute_tokens(tokens: List[Token]):
                 set_fill_color(Color.BLACK)
                 draw_rect(0, 0, *(int_to_vga_modes[graph_mode]))
                 set_color(Color.WHITE)
+                set_font_size(15)
                 set_fill_color(Color.TRANSPARENT)
             elif token.name == "outtextxy":
                 x = params[0].value
                 y = params[1].value
                 text = params[2].value
-                draw_text(x, y, text)
+                temp_color = get_color()
+                set_color(text_color)
+                # print(get_font_size())
+                draw_text(x, y + 10, text)
+                set_color(temp_color)
             elif token.name == "line":
                 x1 = params[0].value
                 y1 = params[1].value
@@ -64,7 +71,15 @@ def execute_tokens(tokens: List[Token]):
                 s = params[2].value
                 e = params[3].value
                 r = params[4].value
-                arc(x, y, s - 45, e - 45, r, r)
+                arc(x, y, s - 20, e - 20, r, r)
+            elif token.name == "ellipse":
+                x = params[0].value
+                y = params[1].value
+                s = params[2].value
+                e = params[3].value
+                r1 = params[4].value
+                r2 = params[5].value
+                arc(x, y, s, e, r1, r2)
             elif token.name == "circle":
                 x = params[0].value
                 y = params[1].value
@@ -76,6 +91,14 @@ def execute_tokens(tokens: List[Token]):
                 x2 = params[2].value
                 y2 = params[3].value
                 draw_rect(x1, y1, x2, y2)
+            elif token.name == "bar":
+                x1 = params[0].value
+                y1 = params[1].value
+                x2 = params[2].value
+                y2 = params[3].value
+                set_fill_color(get_color())
+                fill_rect(x1, y1, x2, y2)
+                set_fill_color(Color.BLACK)
             elif token.name == "setcolor" or token.name == "setfontcolor":
                 color = int_to_color[params[0].value]
                 set_color(color)

@@ -1,23 +1,42 @@
 #include "graphics.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char const *argv[]) {
   int gdriver = DETECT;
   int gmode = VGAMAX;
+  int x = 20;
+  int y = 20;
+  int incr_y = 50;
+  int dppoints[14] = {y, 150, 300, 250, 400, 150, 425,
+                      350, 300, 275, 150, 350, 200, 150};
 
   initgraph(&gdriver, &gmode, "");
-  outtextxy(20, 20, "Sahil");
 
+  outtextxy(x, y, "Arc");
   setcolor(RED);
-  line(0, 0, 1024, 768);
+  arc(x + 80, y, -5, 20, 45);
+  y += incr_y;
 
-  setcolor(BLUE);
-  circle(50, 50, 20);
+  outtextxy(x, y, "Bar");
+  setcolor(GREEN);
+  bar(x + 80, y, x + 120, y + 20);
+  y += incr_y;
 
   setcolor(YELLOW);
-  arc(100, 100, 0, 45, 78);
+  outtextxy(x, y, "Line");
+  line(x + 80, y, x + 120, y + 10);
+  y += incr_y;
 
-  setcolor(BROWN);
-  rectangle(25, 25, 75, 75);
+  setcolor(BLUE);
+  outtextxy(x, y, "Rectangle");
+  rectangle(x + 80, y, x + 120, y + 10);
+  y += incr_y;
+
+  setcolor(WHITE);
+  outtextxy(x, y, "Ellipse");
+  ellipse(x + 100, y + 5, 0, 360, 30, 10);
+  y += incr_y;
+
+  // drawpoly(2, {{1, 2}, {40, 5}});
 
   getchar();
   closegraph();
