@@ -1,7 +1,8 @@
 from typing import List, Dict, Tuple
 
 from easygraphics import init_graph, Color, set_caption, set_color, set_fill_color, draw_rect, set_font_size, pause, \
-    close_graph, get_color, draw_text, arc, fill_rect, draw_line, draw_polygon, get_fill_color, draw_ellipse
+    close_graph, get_color, draw_text, arc, fill_rect, draw_line, draw_polygon, get_fill_color, draw_ellipse, \
+    draw_circle, draw_pie, clear_device
 
 from src.token.token import Token, TokenType
 
@@ -34,6 +35,25 @@ int_to_color: Dict[int, Color] = {
     15: Color.WHITE,
 }
 
+color_to_int: Dict[Color, int] = {
+    Color.BLACK: 0,
+    Color.BLUE: 1,
+    Color.GREEN: 2,
+    Color.CYAN: 3,
+    Color.RED: 4,
+    Color.MAGENTA: 5,
+    Color.BROWN: 6,
+    Color.LIGHT_GRAY: 7,
+    Color.DARK_GRAY: 8,
+    Color.LIGHT_BLUE: 9,
+    Color.LIGHT_GREEN: 10,
+    Color.LIGHT_CYAN: 11,
+    Color.LIGHT_RED: 12,
+    Color.LIGHT_MAGENTA: 13,
+    Color.YELLOW: 14,
+    Color.WHITE: 15,
+}
+
 
 class FunctionCall(Token):
     def eval(self, variables: Dict[str, any]):
@@ -56,8 +76,9 @@ class FunctionCall(Token):
             set_color(Color.WHITE)
             set_font_size(15)
             set_fill_color(Color.TRANSPARENT)
+            variables[text_color_key] = 15
             return 0
-        if name == "getchar":
+        if name == "getchar" or name == "getch":
             pause()
             return 0
         if name == "closegraph":
@@ -68,7 +89,7 @@ class FunctionCall(Token):
             y = args[1]
             text = args[2]
             temp_color = get_color()
-            set_color(variables[text_color_key])
+            set_color(int_to_color[variables[text_color_key]])
             draw_text(x, y + 10, text)
             set_color(temp_color)
             return 0
@@ -78,7 +99,7 @@ class FunctionCall(Token):
             return 0
         if name == "setfontcolor":
             color = int_to_color[args[0]]
-            variables[text_color_key] = color
+            variables[text_color_key] = args[0]
             return 0
         if name == "arc":
             x = args[0]
@@ -86,7 +107,7 @@ class FunctionCall(Token):
             s = args[2]
             e = args[3]
             r = args[4]
-            arc(x, y, s - 45, e - 45, r, r)
+            arc(x, y, s + 360, e + 360, r, r)
             return 0
         if name == "bar":
             x1 = args[0]
@@ -141,6 +162,38 @@ class FunctionCall(Token):
             draw_polygon(*v)
             set_fill_color(temp_color)
             return 0
+        if name == "getfontcolor":
+            return variables[text_color_key]
+        if name == "snprintf":
+            format_str: str = args[2]
+            format_str = format_str.replace("%d", "{}").format(*args[3:])
+            variables['buf'] = format_str
+            return 0
+        if name == "pieslice":
+            x = args[0]
+            y = args[1]
+            s = args[2]
+            e = args[3]
+            r = args[4]
+            draw_pie(x, y, s, e, r, r)
+            return 0
+        if name == "sector":
+            x = args[0]
+            y = args[1]
+            s = args[2]
+            e = args[3]
+            r1 = args[4]
+            r2 = args[5]
+            draw_pie(x, y, s, e, r1, r2)
+        if name == "circle":
+            x = args[0]
+            y = args[1]
+            r = args[2]
+            draw_circle(x, y, r)
+            return 0;
+        if name == "cleardevice":
+            clear_device()
+            return 0;
         return 0
 
     def __init__(self, name: str, params: List[Token]):
