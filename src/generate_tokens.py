@@ -67,6 +67,8 @@ def tokenize_node(node):
     if node_type == "BinaryOp":
         op = node["op"]
         return BinaryOperation(tokenize_node(node["left"]), tokenize_node(node["right"]), BinaryOperator(op))
+    if node_type == "Return":
+        return Literal(0, LiteralType.INT)
     raise Exception(f"Could not tokenize {node}")
 
 
@@ -92,7 +94,6 @@ def handle_declaration(node):
     init = node["init"]
     name = node["name"]
     identifier_type = get_identifier_type(node)
-    print(identifier_type)
     if init is None:
         # no RHS value
         return Declaration(name, str_to_type[identifier_type], handle_empty_declaration(node))
