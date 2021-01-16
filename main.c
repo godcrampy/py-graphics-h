@@ -1,8 +1,9 @@
 #include "graphics.h"
 
 int main(int argc, char const *argv[]) {
-  int gdriver = DETECT;
+  int gdriver = DETECT + 5;
   int gmode = VGAMAX;
+  gmode = 5;
   int x = 20;
   int y = 20;
   int incr_y = 50;
