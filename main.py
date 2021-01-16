@@ -59,7 +59,7 @@ variables: Dict[str, Identifier] = {
     "WHITE": Identifier("WHITE", 15, LiteralType.INT),
 }
 
-tokens = generate_tokens(ast, variables)
+tokens = generate_tokens(ast)
 
 
 # print([token.__str__() for token in tokens])
