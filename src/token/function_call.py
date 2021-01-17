@@ -2,7 +2,7 @@ from typing import List, Dict, Tuple
 
 from easygraphics import init_graph, Color, set_caption, set_color, set_fill_color, draw_rect, set_font_size, pause, \
     close_graph, get_color, draw_text, arc, fill_rect, draw_line, draw_polygon, get_fill_color, draw_ellipse, \
-    draw_circle, draw_pie, clear_device
+    draw_circle, draw_pie, clear_device, get_width, get_height
 
 from src.token.token import Token, TokenType
 
@@ -151,6 +151,15 @@ class FunctionCall(Token):
             draw_ellipse(x, y, r1, r2)
             set_fill_color(temp_color)
             return 0
+        if name == "fillcircle":
+            x = args[0]
+            y = args[1]
+            r = args[2]
+            temp_color = get_fill_color()
+            set_fill_color(get_color())
+            draw_circle(x, y, r)
+            set_fill_color(temp_color)
+            return 0
         if name == "drawpoly":
             v = args[1]
             draw_polygon(*v)
@@ -190,10 +199,14 @@ class FunctionCall(Token):
             y = args[1]
             r = args[2]
             draw_circle(x, y, r)
-            return 0;
+            return 0
         if name == "cleardevice":
             clear_device()
-            return 0;
+            return 0
+        if name == "getmaxx":
+            return get_width()
+        if name == "getmaxy":
+            return get_height()
         return 0
 
     def __init__(self, name: str, params: List[Token]):
