@@ -39,4 +39,3 @@ text_color = Color.WHITE
 def execute_tokens(tokens: List[Token], variables: Dict[str, any]):
     for token in tokens:
         token.eval(variables)
-    print(variables)

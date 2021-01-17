@@ -69,7 +69,7 @@ class FunctionCall(Token):
         if name == "initgraph":
             graph_mode = args[1]
             init_graph(*(int_to_vga_modes[graph_mode]))
-            set_caption("main.c")
+            set_caption("pycc")
             set_color(Color.BLACK)
             set_fill_color(Color.BLACK)
             draw_rect(0, 0, *(int_to_vga_modes[graph_mode]))

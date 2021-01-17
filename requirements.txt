@@ -1,0 +1,17 @@
+apng==0.3.4
+attrs==20.3.0
+coverage==5.3.1
+easygraphics==2.0.1.2
+iniconfig==1.1.1
+packaging==20.8
+pluggy==0.13.1
+py==1.10.0
+pycparser==2.20
+pygame==2.0.1
+pyparsing==2.4.7
+PyQt5==5.15.2
+PyQt5-sip==12.8.1
+pytest==6.2.1
+pytest-cov==2.10.1
+python-dotenv==0.15.0
+toml==0.10.2
