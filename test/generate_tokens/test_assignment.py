@@ -77,3 +77,17 @@ def test_identifier_string_assignment():
 
     assert token.left.name == "d"
     assert token.right.name == "g"
+
+
+def test_assignement_eval():
+    test_str = wrap_with_main("{a += g;b -= g;c /= g; d *= g;}")
+    tokens = add_token(test_str)
+
+    token = tokens[-1]
+    variables = {'a': 5, 'b': 4, 'c': 14, 'd': 10, 'g': 2}
+    token.eval(variables)
+    assert variables['a'] == 7
+    assert variables['b'] == 2
+    assert variables['c'] == 7
+    assert variables['d'] == 20
+    assert variables['g'] == 2
