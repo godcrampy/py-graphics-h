@@ -9,6 +9,12 @@ class BinaryOperator(Enum):
     SUB = "-"
     MULT = "*"
     DIV = "/"
+    EQ = "=="
+    NEQ = "!="
+    GEQ = ">="
+    LEQ = "<="
+    GT = ">"
+    LT = "<"
 
 
 class BinaryOperation(Token):
@@ -24,6 +30,18 @@ class BinaryOperation(Token):
             return left_val * right_val
         if op == BinaryOperator.DIV:
             return left_val / right_val
+        if op == BinaryOperator.EQ:
+            return left_val == right_val
+        if op == BinaryOperator.NEQ:
+            return left_val != right_val
+        if op == BinaryOperator.GEQ:
+            return left_val >= right_val
+        if op == BinaryOperator.LEQ:
+            return left_val <= right_val
+        if op == BinaryOperator.LT:
+            return left_val < right_val
+        if op == BinaryOperator.GT:
+            return left_val > right_val
         raise Exception("Unknown Operator in Binary Operation")
 
     def __init__(self, left: Token, right: Token, operator: BinaryOperator):

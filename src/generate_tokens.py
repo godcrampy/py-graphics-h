@@ -2,13 +2,16 @@ from typing import List, Dict
 
 from src.token.assignment import Assignment, AssignmentOperator
 from src.token.binary_operation import BinaryOperation, BinaryOperator
+from src.token.compound import Compound
 from src.token.declaration import Declaration
 from src.token.function_call import FunctionCall
 from src.token.identifier import Identifier
+from src.token.if_flow import IfFlow
 from src.token.literal import Literal
 from src.token.token import Token, LiteralType
 # Delay execution
 from src.token.unary_operation import UnaryOperation, UnaryOperator
+from src.token.while_flow import WhileFlow
 
 
 def str_to_cast(value, type_str):
@@ -68,7 +71,13 @@ def tokenize_node(node):
         op = node["op"]
         return BinaryOperation(tokenize_node(node["left"]), tokenize_node(node["right"]), BinaryOperator(op))
     if node_type == "Return":
-        return Literal(0, LiteralType.INT)
+        return tokenize_node(node["expr"])
+    if node_type == "While":
+        return WhileFlow(tokenize_node(node["cond"]), [tokenize_node(n) for n in node["stmt"]["block_items"]])
+    if node_type == "If":
+        return IfFlow(tokenize_node(node["cond"]), tokenize_node(node["iftrue"]), tokenize_node(node["iffalse"]))
+    if node_type == "Compound":
+        return Compound([tokenize_node(n) for n in node["block_items"]])
     raise Exception(f"Could not tokenize {node}")
 
 
