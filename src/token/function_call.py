@@ -1,7 +1,7 @@
 from typing import List, Dict, Tuple
 
-from easygraphics import init_graph, Color, set_caption, set_color, set_fill_color, draw_rect, set_font_size, pause, \
-    close_graph, get_color, draw_text, arc, fill_rect, draw_line, draw_polygon, get_fill_color, draw_ellipse, \
+from easygraphics import Color, set_caption, set_color, set_fill_color, draw_rect, set_font_size, pause, \
+    get_color, draw_text, arc, fill_rect, draw_line, draw_polygon, get_fill_color, draw_ellipse, \
     draw_circle, draw_pie, clear_device, get_width, get_height
 
 from src.token.token import Token, TokenType
@@ -68,11 +68,11 @@ class FunctionCall(Token):
         text_color_key = "__text_color__"
         if name == "initgraph":
             graph_mode = args[1]
-            init_graph(*(int_to_vga_modes[graph_mode]))
+            # init_graph(*(int_to_vga_modes[graph_mode]))
             set_caption("pycc")
             set_color(Color.BLACK)
             set_fill_color(Color.BLACK)
-            draw_rect(0, 0, *(int_to_vga_modes[graph_mode]))
+            draw_rect(0, 0, get_width(), get_height())
             set_color(Color.WHITE)
             set_font_size(15)
             set_fill_color(Color.TRANSPARENT)
@@ -82,7 +82,7 @@ class FunctionCall(Token):
             pause()
             return 0
         if name == "closegraph":
-            close_graph()
+            # close_graph()
             return 0
         if name == "outtextxy":
             x = args[0]
@@ -98,8 +98,7 @@ class FunctionCall(Token):
             set_color(color)
             return 0
         if name == "setfontcolor":
-            color = int_to_color[args[0]]
-            variables[text_color_key] = args[0]
+            variables[text_color_key] = variables[self.params[0].name]
             return 0
         if name == "arc":
             x = args[0]
@@ -207,6 +206,9 @@ class FunctionCall(Token):
             return get_width()
         if name == "getmaxy":
             return get_height()
+        if name == "printf":
+            print(args[0])
+            return 0
         return 0
 
     def __init__(self, name: str, params: List[Token]):
