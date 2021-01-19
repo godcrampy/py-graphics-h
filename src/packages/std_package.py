@@ -1,3 +1,4 @@
+from time import sleep
 from typing import Dict, List, Set
 
 from src.packages.package import Package
@@ -6,7 +7,7 @@ from src.packages.package import Package
 class StdPackage(Package):
     @classmethod
     def get_supported_functions(cls) -> Set[str]:
-        return {"snprintf", "printf"}
+        return {"snprintf", "printf", "sleep"}
         pass
 
     @classmethod
@@ -18,5 +19,8 @@ class StdPackage(Package):
             format_str: str = args[2]
             format_str = format_str.replace("%d", "{}").format(*args[3:])
             variables['buf'] = format_str
+            return 0
+        if name == "sleep":
+            sleep(args[0])
             return 0
         raise Exception(f"Function {name} not in Standard Package")

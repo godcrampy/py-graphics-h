@@ -14,7 +14,8 @@ class TokenType(Enum):
     UN_OP = 7  # Unary operation
     WHILE = 8  # while loop
     IF = 9  # conditional
-    COMPOUND = 10 # list of tokens
+    COMPOUND = 10  # list of tokens
+    FOR = 11  # for loop
 
 
 class LiteralType(Enum):

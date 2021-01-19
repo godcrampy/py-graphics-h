@@ -4,6 +4,7 @@ from src.token.assignment import Assignment, AssignmentOperator
 from src.token.binary_operation import BinaryOperation, BinaryOperator
 from src.token.compound import Compound
 from src.token.declaration import Declaration
+from src.token.for_flow import ForFlow
 from src.token.function_call import FunctionCall
 from src.token.identifier import Identifier
 from src.token.if_flow import IfFlow
@@ -48,6 +49,8 @@ def tokenize_node(node):
     node_type = node["_nodetype"]
     if node_type == "Decl":
         return handle_declaration(node)
+    if node_type == "DeclList":
+        return Compound([tokenize_node(n) for n in node["decls"]])
     if node_type == "FuncCall":
         return handle_function_call(node)
     if node_type == "Assignment":
@@ -73,11 +76,16 @@ def tokenize_node(node):
     if node_type == "Return":
         return tokenize_node(node["expr"])
     if node_type == "While":
-        return WhileFlow(tokenize_node(node["cond"]), [tokenize_node(n) for n in node["stmt"]["block_items"]])
+        return WhileFlow(tokenize_node(node["cond"]), tokenize_node(node["stmt"]))
     if node_type == "If":
         return IfFlow(tokenize_node(node["cond"]), tokenize_node(node["iftrue"]), tokenize_node(node["iffalse"]))
     if node_type == "Compound":
         return Compound([tokenize_node(n) for n in node["block_items"]])
+    if node_type == "For":
+        return ForFlow(tokenize_node(node["init"]),
+                       tokenize_node(node["cond"]),
+                       tokenize_node(node["next"]),
+                       tokenize_node(node["stmt"]))
     raise Exception(f"Could not tokenize {node}")
 
 

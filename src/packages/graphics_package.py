@@ -99,7 +99,6 @@ class GraphicsPackage(Package):
             set_color(color)
             return 0
         if name == "setfontcolor":
-            print(args[0])
             variables[text_color_key] = args[0]
             return 0
         if name == "arc":
