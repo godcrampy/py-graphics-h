@@ -6,7 +6,7 @@ import sys
 from typing import Dict
 
 from dotenv import load_dotenv
-from easygraphics import Color, easy_run
+from easygraphics import Color, easy_run, init_graph, close_graph
 
 from src.execute_tokens import execute_tokens
 from src.generate_tokens import generate_tokens
@@ -61,7 +61,7 @@ variables: Dict[str, any] = {
     "LIGHTMAGENTA": 13,
     "YELLOW": 14,
     "WHITE": 15,
-    "__text_color__": Color.WHITE
+    "__text_color__": Color.WHITE  # Always set as integer
 }
 
 tokens = generate_tokens(ast)
@@ -70,7 +70,9 @@ tokens = generate_tokens(ast)
 # print([token.__str__() for token in tokens])
 # print(variables)
 def main():
+    init_graph(1200, 900)
     execute_tokens(tokens, variables)
+    close_graph()
     if debug:
         print(variables)
 

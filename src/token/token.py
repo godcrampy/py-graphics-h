@@ -12,6 +12,9 @@ class TokenType(Enum):
     ASSIGNMENT = 5  # assignment
     BIN_OP = 6  # binary operation
     UN_OP = 7  # Unary operation
+    WHILE = 8  # while loop
+    IF = 9  # conditional
+    COMPOUND = 10 # list of tokens
 
 
 class LiteralType(Enum):
