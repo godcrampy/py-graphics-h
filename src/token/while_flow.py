@@ -14,6 +14,3 @@ class WhileFlow(Token):
         super().__init__(TokenType.WHILE)
         self.condition = condition
         self.stmts = stmts
-
-    def __str__(self):
-        return f"While({self.condition})"

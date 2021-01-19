@@ -61,7 +61,7 @@ variables: Dict[str, any] = {
     "LIGHTMAGENTA": 13,
     "YELLOW": 14,
     "WHITE": 15,
-    "__text_color__": Color.WHITE
+    "__text_color__": Color.WHITE  # Always set as integer
 }
 
 tokens = generate_tokens(ast)

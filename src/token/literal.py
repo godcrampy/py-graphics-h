@@ -16,6 +16,3 @@ class Literal(Token):
         super().__init__(TokenType.LITERAL)
         self.value = value
         self.literal_type = literal_type
-
-    def __str__(self):
-        return f"Literal({self.value}, {self.literal_type})"

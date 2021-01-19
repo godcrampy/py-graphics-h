@@ -48,7 +48,7 @@ def test_args():
 
 def test_unary():
     test_str = wrap_with_main("baz(&b, -a);")
-    tokens = add_token(test_str, True)
+    tokens = add_token(test_str)
 
     token = tokens[-1]
     assert isinstance(token, FunctionCall)
@@ -70,7 +70,7 @@ def test_unary():
 
 def test_binary_operation():
     test_str = wrap_with_main("qux(a + a, 6 - 5, a * 5, 15 / a);")
-    tokens = add_token(test_str, True)
+    tokens = add_token(test_str)
 
     token = tokens[-1]
     assert isinstance(token, FunctionCall)

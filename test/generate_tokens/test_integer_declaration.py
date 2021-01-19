@@ -16,7 +16,6 @@ def test_direct_integer_declaration():
     assert isinstance(token, Declaration)
     assert token.name == "a"
     assert token.literal_type == LiteralType.INT
-    # TODO: write execute function for right
     rhs = token.right
     assert isinstance(rhs, Literal)
     assert rhs.literal_type == LiteralType.INT
@@ -31,7 +30,6 @@ def test_assigned_integer_declaration():
     assert isinstance(token, Declaration)
     assert token.name == "b"
     assert token.literal_type == LiteralType.INT
-    # TODO: write execute function for right
     rhs = token.right
     assert isinstance(rhs, Identifier)
     assert rhs.name == "a"
@@ -45,7 +43,6 @@ def test_operation_integer_declaration():
     assert isinstance(token, Declaration)
     assert token.name == "b"
     assert token.literal_type == LiteralType.INT
-    # TODO: write execute function for right
     rhs = token.right
     assert isinstance(rhs, BinaryOperation)
 
@@ -65,7 +62,6 @@ def test_uninitialised_integer_declaration():
     assert isinstance(token, Declaration)
     assert token.name == "c"
     assert token.literal_type == LiteralType.INT
-    # TODO: write execute function for right
     rhs = token.right
     assert isinstance(rhs, Literal)
     assert rhs.literal_type == LiteralType.INT
@@ -81,7 +77,6 @@ def test_list_declaration():
     assert isinstance(token, Declaration)
     assert token.name == "d"
     assert token.literal_type == LiteralType.LIST
-    # TODO: write execute function for right
     rhs = token.right
     assert isinstance(rhs, Literal)
     assert rhs.literal_type == LiteralType.LIST

@@ -23,7 +23,6 @@ def test_logical_operations():
 
     token = tokens[-1]
     assert isinstance(token, Compound)
-    assert "Compound" in token.__str__()
     variables = {'z': 10}
     token.eval(variables)
     assert not variables['a']

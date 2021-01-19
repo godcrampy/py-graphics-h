@@ -1,6 +1,6 @@
-from typing import Dict, List
+from typing import Dict
 
-from src.token.token import Token, TokenType, LiteralType
+from src.token.token import Token, TokenType
 
 
 class IfFlow(Token):
@@ -16,6 +16,3 @@ class IfFlow(Token):
         self.condition = condition
         self.if_true = if_true
         self.if_false = if_false
-
-    def __str__(self):
-        return f"IF({self.condition})"

@@ -20,7 +20,7 @@ def str_to_cast(value, type_str):
     if type_str == "string" or type_str == "char":
         res = str(value) if value else str()
         return res.strip("\"")
-    return value
+    raise Exception("Could not cast value")
 
 
 str_to_type: Dict[str, LiteralType] = {
@@ -133,7 +133,7 @@ def get_main_nodes(ast):
 
 def get_identifier_type(node):
     if node is None or "_nodetype" not in node:
-        raise RuntimeError("Cannot find identifier_type of node")
+        raise Exception("Cannot find identifier_type of node")
     # FIXME: Feels Hacky
     if node["_nodetype"] == "ArrayDecl":
         type = get_identifier_type(node["type"])
