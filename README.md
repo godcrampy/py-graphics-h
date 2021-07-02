@@ -26,12 +26,6 @@ interpreter for C with support for `graphics.h`
 * `getmaxx`
 * `getmaxx`
 
-### Major Things Not Supported Yet
-
-* Control Flow
-* Function Definitions
-* Function calls other than the ones mentioned above
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing
